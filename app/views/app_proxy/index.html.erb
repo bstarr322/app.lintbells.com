@@ -10,12 +10,12 @@
   <input type="hidden" name="customer[id]" value="{{ customer.id }}">
   <div id="first_name" class="clearfix large_form">
     <label for="first_name" class="login">{{ 'customer.register.first_name' | t }}</label>
-    <input type="text" value="" name="customer[first_name]" id="first_name" class="large" size="30" value="{{ customer.first_name }}" required />
+    <input type="text" name="customer[first_name]" id="first_name" class="large" size="30" value="{{ customer.first_name }}" required />
   </div>
 
   <div id="last_name" class="clearfix large_form">
     <label for="last_name" class="login">{{ 'customer.register.last_name' | t }}</label>
-    <input type="text" value="" name="customer[last_name]" id="last_name" class="large" size="30"  value="{{ customer.last_name }}" required />
+    <input type="text" name="customer[last_name]" id="last_name" class="large" size="30"  value="{{ customer.last_name }}" required />
   </div>
 
   <div class="clearfix large_form">
