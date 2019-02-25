@@ -33,11 +33,11 @@ class ApiController < ActionController::Base
       customer.password_confirmation = params[:customer][:password_confirmation]
       customer.accepts_marketing = params[:customer][:accepts_marketing]
       customer.save
-      render json: {success: true}, status: :ok
     rescue Exception => e
       puts e
-      render json: {success: false}, status: :ok
+      # render json: {success: false}, status: :ok
     end
+    redirect_to "https://us.lintbells.com/account"
   end
 
   private
