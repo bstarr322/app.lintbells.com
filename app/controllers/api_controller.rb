@@ -24,6 +24,10 @@ class ApiController < ActionController::Base
     render json: { token: token }, status: :ok
   end
 
+  def customer_update
+    
+  end
+
   private
   def get_rule_data(response)
     get_rule /admin\/price_rules[\w\d\/]+/.match(response).to_s

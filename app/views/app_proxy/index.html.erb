@@ -1,19 +1,38 @@
-<h2>App Proxy Page</h2>
+{% if customer %}
+<h2>Customer Information</h2>
+<form method="post" action="https://app.lintbells.com/customer_update">
+  <p>Email: {{ customer.email }}</p>
+  <input type="hidden" name="customer[email]" value="{{ customer.email }}">
+  <input type="hidden" name="customer[id]" value="{{ customer.id }}">
+  <div id="first_name" class="clearfix large_form">
+    <label for="first_name" class="login">{{ 'customer.register.first_name' | t }}</label>
+    <input type="text" value="" name="customer[first_name]" id="first_name" class="large" size="30" value="{{ customer.first_name }}" required />
+  </div>
 
-<p>Congratulations! You have successfully configured App Proxy for your shopify application.</p>
-<p>Any valid liquid code included in this page will be parsed and rendered by Shopify.</p>
+  <div id="last_name" class="clearfix large_form">
+    <label for="last_name" class="login">{{ 'customer.register.last_name' | t }}</label>
+    <input type="text" value="" name="customer[last_name]" id="last_name" class="large" size="30"  value="{{ customer.last_name }}" required />
+  </div>
 
-<br>
+  <div id="password" class="clearfix large_form">
+    <label for="password" class="login">{{ 'customer.register.password' | t }}</label>
+    <input type="password" value="" name="customer[password]" id="password" class="large password" size="30" required />
+  </div>
 
-<pre>
-Your Shop Details:
-<hr>
-	Shop Name 			: {{ shop.name }}
-	myshopify name 			: {{ shop.permanent_domain }}
-	Primary Domain of Shop 		: {{ shop.domain }}
-	Shop URL 			: {{ shop.url }}
-	Shop Currency 			: {{ shop.currency }}
-	No. of products in this shop 	: {{ shop.products_count }}
-<br>	
-<hr>	
-</pre>
+  <div id="password" class="clearfix large_form">
+    <label for="password_confirmation" class="login">{{ 'customer.register.password' | t }}</label>
+    <input type="password" value="" name="customer[password_confirmation]" id="password_confirmation" class="large password" size="30" required />
+  </div>
+
+  <div class="acceptsMarketing">
+    <input type="checkbox" id="customer[accepts_marketing]" name="customer[accepts_marketing]" {% if customer.accepts_marketing %}checked{% endif %}>
+    <label for="customer[accepts_marketing]">{{ 'customer.register.accepts_marketing' | t }}</label>
+  </div>
+  <button type="submit" class="action_button">Update</button>
+</form>
+
+{% else %}
+  <p class="center">
+    <a href="/account">Please login to your account.</a>
+  </p>
+{% endif %}
