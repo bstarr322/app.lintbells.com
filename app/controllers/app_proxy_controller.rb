@@ -8,7 +8,10 @@ class AppProxyController < ApplicationController
   def update
     shop = Shop.first
     begin
+      puts 'OK'
       shop.with_shopify_session do
+        puts 'OK1'
+        puts params[:customer][:id]
         customer = ShopifyAPI::Customer.find(params[:customer][:id])
         customer.first_name = params[:customer][:first_name]
         customer.last_name = params[:customer][:last_name]
@@ -16,9 +19,11 @@ class AppProxyController < ApplicationController
         customer.password_confirmation = params[:customer][:password_confirmation]
         customer.accepts_marketing = params[:customer][:accepts_marketing]
         customer.save
+        puts 'OK2'
       end
     rescue Exception => e
       puts e
+      puts 'OK3'
       # render json: {success: false}, status: :ok
     end
     redirect_to "https://us.lintbells.com/account"
