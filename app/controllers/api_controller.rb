@@ -25,7 +25,19 @@ class ApiController < ActionController::Base
   end
 
   def customer_update
-    
+    begin
+      customer = ShopifyAPI::Customer.find(params[:customer][:id])
+      customer.first_name = params[:customer][:first_name]
+      customer.last_name = params[:customer][:last_name]
+      customer.password = params[:customer][:password]
+      customer.password_confirmation = params[:customer][:password_confirmation]
+      customer.accepts_marketing = params[:customer][:accepts_marketing]
+      customer.save
+      render json: {success: true}, status: :ok
+    rescue Exception => e
+      puts e
+      render json: {success: false}, status: :ok
+    end
   end
 
   private

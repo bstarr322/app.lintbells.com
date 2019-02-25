@@ -1,6 +1,8 @@
 {% if customer %}
 <h2>Customer Information</h2>
 <form method="post" action="https://app.lintbells.com/customer_update">
+  <p class="customer_success">Customer is updated successfuly</p>
+  <p class="customer_errors"></p>
   <p>Email: {{ customer.email }}</p>
   <input type="hidden" name="customer[email]" value="{{ customer.email }}">
   <input type="hidden" name="customer[id]" value="{{ customer.id }}">
@@ -30,7 +32,21 @@
   </div>
   <button type="submit" class="action_button">Update</button>
 </form>
+<script type="text/javascript">
+  var password = document.getElementById("password")
+  , confirm_password = document.getElementById("password_confirmation");
 
+  function validatePassword(){
+    if(password.value != confirm_password.value) {
+      confirm_password.setCustomValidity("Passwords Don't Match");
+    } else {
+      confirm_password.setCustomValidity('');
+    }
+  }
+
+  password.onchange = validatePassword;
+  confirm_password.onkeyup = validatePassword;
+</script>
 {% else %}
   <p class="center">
     <a href="/account">Please login to your account.</a>
