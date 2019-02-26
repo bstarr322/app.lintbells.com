@@ -62,14 +62,15 @@ class AppProxyController < ApplicationController
         #   accepts_marketing: params[:customer][:accepts_marketing],
         #   metafields: dogs_meta
         # )
-        puts {
+        a = {
           first_name: params[:customer][:first_name],
           last_name: params[:customer][:last_name],
           password: params[:customer][:password],
           password_confirmation: params[:customer][:password],
           accepts_marketing: params[:customer][:accepts_marketing],
           metafields: dogs_meta
-        } 
+        }
+        puts a 
       end
     rescue Exception => e
       puts e
