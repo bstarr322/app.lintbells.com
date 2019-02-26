@@ -28,7 +28,7 @@ class AppProxyController < ApplicationController
     begin
       shop.with_shopify_session do
         dogs_meta = []
-        for i in 0..(params[:customer][:num_of_doggies] - 1)
+        for i in 0..(params[:customer][:num_of_doggies].to_i - 1)
           dogs_meta.push(
             key: "dog_name_#{i}",
             value: "#{params[:dog_names][i]}",
@@ -67,7 +67,7 @@ class AppProxyController < ApplicationController
           last_name: params[:customer][:last_name],
           password: params[:customer][:password],
           password_confirmation: params[:customer][:password],
-          accepts_marketing: params[:customer][:accepts_marketing],
+          accepts_marketing: params[:customer][:accepts_marketing] == 'on' ? true : false,
           metafields: dogs_meta
         }
         puts a 
