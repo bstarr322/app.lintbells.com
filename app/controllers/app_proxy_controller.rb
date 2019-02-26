@@ -31,25 +31,25 @@ class AppProxyController < ApplicationController
         for i in 0..(params[:customer][:num_of_doggies].to_i - 1)
           dogs_meta.push(
             key: "dog_name_#{i}",
-            value: "#{params[:dog_names][i]}",
+            value: "#{params[:dog_names][i.to_s]}",
             value_type: "string",
             namespace: "dog"
             )
           dogs_meta.push(
             key: "sex_#{i}",
-            value: "#{params[:sex][i]}",
+            value: "#{params[:sex][i.to_s]}",
             value_type: "string",
             namespace: "dog"
             )
           dogs_meta.push(
             key: "dog_year_#{i}",
-            value: "#{params[:dog_year][i]}",
+            value: "#{params[:dog_year][i.to_s]}",
             value_type: "string",
             namespace: "dog"
             )
           dogs_meta.push(
             key: "dog_breed_#{i}",
-            value: "#{params[:dog_breed][i]}",
+            value: "#{params[:dog_breed][i.to_s]}",
             value_type: "string",
             namespace: "dog"
             )
