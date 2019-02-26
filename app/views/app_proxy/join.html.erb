@@ -1,0 +1,51 @@
+<a name="pagecontent" id="pagecontent"></a>
+
+<section class="doggies-info center">
+  <div class="container">
+    <h1>Tell us about your pack of doggies</h1>
+    <form method="post" action="https://us.lintbells.com/apps/customer/join">
+      <div class="step">
+        <h2>How many doggies do you have?</h2>
+        <input type="number" id="num_of_doggies" name="customer[num_of_doggies]" min="1" max="24" data-max="24" required>
+      </div>
+      <div class="name-sex-elements clearfix"></div>
+      <div class="years-breeds clearfix">
+        <h2>How old are your doggies and what are their breeds?</h2>
+        <div class="results container"></div>
+      </div>
+      <div class="create-customer">
+        <div id="first_name" class="clearfix large_form">
+          <label for="first_name" class="login">{{ 'customer.register.first_name' | t }}</label>
+          <input type="text" value="" name="customer[first_name]" id="first_name" class="large" size="30" />
+        </div>
+
+        <div id="last_name" class="clearfix large_form">
+          <label for="last_name" class="login">{{ 'customer.register.last_name' | t }}</label>
+          <input type="text" value="" name="customer[last_name]" id="last_name" class="large" size="30" />
+        </div>
+
+        <div id="email" class="clearfix large_form">
+          <label for="email" class="login">{{ 'customer.register.email' | t }}</label>
+          <input type="email" value="" name="customer[email]" id="email" class="large" size="30" />
+        </div>
+
+        <div id="password" class="clearfix large_form">
+          <label for="password" class="login">{{ 'customer.register.password' | t }}</label>
+          <input type="password" value="" name="customer[password]" id="password" class="large password" size="30" />
+        </div>
+
+        <div class="acceptsMarketing">
+          <input type="checkbox" id="customer[accepts_marketing]" name="customer[accepts_marketing]">
+          <label for="customer[accepts_marketing]">{{ 'customer.register.accepts_marketing' | t }}</label>
+        </div>
+
+        <div class="action_bottom">
+          <input class="btn action_button" type="submit" value="{{ 'customer.register.sign_up' | t }}" style="float: none;" />
+          <p class="left" style="padding-top: 8px;">
+            {{ 'customer.register.returning_customer_label' | t }} {{ 'customer.register.sign_in_html' | t | customer_login_link }}
+          </p>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>

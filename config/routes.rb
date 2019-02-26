@@ -11,6 +11,8 @@ Rails.application.routes.draw do
     # GET /app_proxy/reviews will now be routed to
     # AppProxy::ReviewsController#index, for example
     post '/update', action: 'update'
+    get '/join', action: 'join'
+    post '/join', action: 'create'
     get '/account', to: 'account#index'
   end
   get '/get_price_rule', to: 'api#get_price_rule'
