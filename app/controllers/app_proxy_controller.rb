@@ -54,23 +54,25 @@ class AppProxyController < ApplicationController
             namespace: "dog"
             )
         end
-        # ShopifyAPI::Customer.create(
-        #   first_name: params[:customer][:first_name],
-        #   last_name: params[:customer][:last_name],
-        #   password: params[:customer][:password],
-        #   password_confirmation: params[:customer][:password],
-        #   accepts_marketing: params[:customer][:accepts_marketing],
-        #   metafields: dogs_meta
-        # )
-        a = {
+        customer = ShopifyAPI::Customer.create(
           first_name: params[:customer][:first_name],
           last_name: params[:customer][:last_name],
           password: params[:customer][:password],
           password_confirmation: params[:customer][:password],
           accepts_marketing: params[:customer][:accepts_marketing] == 'on' ? true : false,
           metafields: dogs_meta
-        }
-        puts a 
+        )
+        url = customer.account_activation_url
+        CustomerMailer.activate_email(customer, url).deliver_now
+        # a = {
+        #   first_name: params[:customer][:first_name],
+        #   last_name: params[:customer][:last_name],
+        #   password: params[:customer][:password],
+        #   password_confirmation: params[:customer][:password],
+        #   accepts_marketing: params[:customer][:accepts_marketing] == 'on' ? true : false,
+        #   metafields: dogs_meta
+        # }
+        # puts a 
       end
     rescue Exception => e
       puts e
