@@ -57,6 +57,7 @@ class AppProxyController < ApplicationController
         customer = ShopifyAPI::Customer.create(
           first_name: params[:customer][:first_name],
           last_name: params[:customer][:last_name],
+          email: params[:customer][:email],
           password: params[:customer][:password],
           password_confirmation: params[:customer][:password],
           accepts_marketing: params[:customer][:accepts_marketing] == 'on' ? true : false,
