@@ -63,7 +63,7 @@ class AppProxyController < ApplicationController
           metafields: dogs_meta
         )
         url = customer.account_activation_url
-        CustomerMailer.activate_email(customer, url).deliver_now
+        CustomerMailer.with(customer: customer, url: url).activate_email.deliver_now
         # a = {
         #   first_name: params[:customer][:first_name],
         #   last_name: params[:customer][:last_name],
