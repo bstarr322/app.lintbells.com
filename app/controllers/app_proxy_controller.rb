@@ -28,6 +28,12 @@ class AppProxyController < ApplicationController
     begin
       shop.with_shopify_session do
         dogs_meta = []
+        dogs_meta.push(
+          key: "num_of_doggies",
+          value: "#{params[:customer][:num_of_doggies].to_i}",
+          value_type: "integer",
+          namespace: "dog"
+          )
         for i in 0..(params[:customer][:num_of_doggies].to_i - 1)
           dogs_meta.push(
             key: "dog_name_#{i}",
@@ -63,8 +69,8 @@ class AppProxyController < ApplicationController
           accepts_marketing: params[:customer][:accepts_marketing] == 'on' ? true : false,
           metafields: dogs_meta
         )
-        url = customer.account_activation_url
-        CustomerMailer.with(customer: customer, url: url).activate_email.deliver_now
+        # url = customer.account_activation_url
+        # CustomerMailer.with(customer: customer, url: url).activate_email.deliver_now
         # a = {
         #   first_name: params[:customer][:first_name],
         #   last_name: params[:customer][:last_name],

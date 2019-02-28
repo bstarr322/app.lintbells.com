@@ -1,3 +1,7 @@
+# require "net/https"
+# require "uri"
+# require "open-uri"
+
 class ApiController < ActionController::Base
   protect_from_forgery with: :null_session
   layout false
@@ -22,6 +26,84 @@ class ApiController < ActionController::Base
 
     token = ShopifyMultipass.new(ENV['SHOPIFY_MULTIPASS_SECRET']).generate_token(customer_data)
     render json: { token: token }, status: :ok
+  end
+
+
+  # @Description: Update Modulus Customer & Pets details
+  # @Params:
+  #   customer: Modulus Customer ID, leave it blank for new customer.
+  #   external_unique_id: Shopify Customer ID,
+  #   email: should be unique email for new customer.
+  def modulus_update
+    # Begin not working in POST why ?
+    data = JSON.parse request.raw_post
+    
+    shop = Shop.first
+    customer = nil
+
+    # If customer already exist in shopify, just update the details.
+    # shop.with_shopify_session do
+      # customer = ShopifyAPI::Customer.search(query: "email:#{data['customer']['email']}")
+      external_unique_id = ""
+      if customer
+        # puts customer.id
+        external_unique_id = customer.id
+      else
+        create_customer(data)
+      end
+
+      uri = URI('https://api-lintbells.moduluserp.com/Api/customerandpets')
+      
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+      req = Net::HTTP::Post.new(uri.path, {
+        'Content-Type' =>'application/json',  
+        'Authorization' => 'Basic ' + Base64::encode64('apiuser:tef$3KaM2PruY4B')
+      })
+      req.body = {
+        "email" => data['customer']['email'],
+        "customer_id" => data['customer_id'],
+        "external_unique_id" => external_unique_id,
+        "first_name" => data['customer']['first_name'],
+        "last_name" => data['customer']['last_name'],
+        "pet_details" => data['pet_details']
+      }.to_json
+
+      puts "Modulus -- Post Customer & Pet Details of #{data['customer']['email']}"
+
+      res = http.request(req)
+
+      render json: { data: JSON.parse(res.body) }, status: :ok
+    # end
+  end
+
+
+  # @Description: Update Modulus Customer & Pets details
+  # @Params:
+  #   email: Customer email
+  #   customer_id: ""
+  #   external_unique_id: ""
+  def modulus_getdetails
+    uri = URI('https://api-lintbells.moduluserp.com/Api/customerandpets/getdetails')
+
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+    req = Net::HTTP::Post.new(uri.path, {
+      'Content-Type' =>'application/json',  
+      'Authorization' => 'Basic ' + Base64::encode64('apiuser:tef$3KaM2PruY4B')
+    })
+    req.body = {
+      "email" => params[:email], 
+      "customer_id" => "",
+      "external_unique_id" => ""
+    }.to_json
+    puts "Modulus -- Get Customer Details of #{params[:email]}"
+    res = http.request(req)
+    render json: { data: JSON.parse(res.body) }, status: :ok
   end
 
   def customer_update
@@ -50,6 +132,25 @@ class ApiController < ActionController::Base
   def request_rule_by_id(id)
     @shop.with_shopify_session do
       ShopifyAPI::PriceRule.find(id)
+    end
+  end
+
+
+  def create_customer(data)
+    shop = Shop.first
+    begin
+      shop.with_shopify_session do
+        customer = ShopifyAPI::Customer.create(
+          first_name: data['customer']['first_name'],
+          last_name: data['customer']['last_name'],
+          email: data['customer']['email'],
+          password: data['customer']['password'],
+          password_confirmation: data['customer']['password'],
+          accepts_marketing: data['customer']['accepts_marketing'] == 'on' ? true : false
+        )
+      end
+    rescue Exception => e
+      puts e
     end
   end
 end

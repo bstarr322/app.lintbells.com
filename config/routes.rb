@@ -18,5 +18,7 @@ Rails.application.routes.draw do
   get '/get_price_rule', to: 'api#get_price_rule'
   post '/multipass', to: 'api#multipass'
   post '/customer_update', to: 'api#customer_update'
+  post '/modulus_update', to: 'api#modulus_update'
+  post '/modulus_getdetails', to: 'api#modulus_getdetails'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
