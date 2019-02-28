@@ -24,13 +24,13 @@
   </div>
 
   <div class="clearfix large_form">
-    <label for="password_confirmation" class="login">{{ 'customer.register.password' | t }}</label>
+    <label for="password_confirmation" class="login">{{ 'customer.register.password_confirm' | t }}</label>
     <input type="password" value="" name="customer[password_confirmation]" id="password_confirmation" class="large password" size="30" required />
   </div>
 
   <div class="acceptsMarketing">
-    <input type="checkbox" id="accepts_marketing" name="customer[accepts_marketing]" {% if customer.accepts_marketing %}checked{% endif %}>
-    <label for="accepts_marketing">{{ 'customer.register.accepts_marketing' | t }}</label>
+    <input type="checkbox" id="customer[accepts_marketing]" name="customer[accepts_marketing]" {% if customer.accepts_marketing %}checked{% endif %}>
+    <label for="customer[accepts_marketing]">{{ 'customer.register.accepts_marketing' | t }}</label>
   </div>
   <button type="submit" class="action_button">Update</button>
 </form>
