@@ -12,12 +12,13 @@ class AppProxyController < ApplicationController
       shop.with_shopify_session do
         puts 'OK'
         customer = ShopifyAPI::Customer.find(params[:customer][:id])
+        customer.id = params[:customer][:id]
         customer.first_name = params[:customer][:first_name]
         customer.last_name = params[:customer][:last_name]
+        customer.email = params[:customer][:email]
         customer.password = params[:customer][:password]
         customer.password_confirmation = params[:customer][:password_confirmation]
         # customer.accepts_marketing = params[:customer][:accepts_marketing]
-        puts 'OK1'
         customer.save
       end
     rescue Exception => e
