@@ -14,7 +14,7 @@ class AppProxyController < ApplicationController
         customer.last_name = params[:customer][:last_name]
         customer.password = params[:customer][:password]
         customer.password_confirmation = params[:customer][:password_confirmation]
-        customer.accepts_marketing = params[:customer][:accepts_marketing]
+        # customer.accepts_marketing = params[:customer][:accepts_marketing]
         customer.save
       end
     rescue Exception => e
