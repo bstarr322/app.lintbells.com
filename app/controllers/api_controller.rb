@@ -40,7 +40,7 @@ class ApiController < ActionController::Base
     shop = Shop.first
 
     customer_id = data['customer_id']
-
+    
     if data['signup']
       # If customer already exist in Modulus, just update the details.
       # Check if already exists;
@@ -64,6 +64,16 @@ class ApiController < ActionController::Base
       customer = JSON.parse(res.body)
 
       if customer['customer_id']
+        # Check If the customer does exist in Shopify side.
+        shopify_customer = nil
+        shop.with_shopify_session do
+          email = data['customer']['email']
+          shopify_customer = ShopifyAPI::Customer.search(query: "#{email}")
+        end
+        unless shopify_customer[0]
+          create_customer(data)
+        end
+
         customer_id = customer['customer_id']
 
         # Remove old pet details
