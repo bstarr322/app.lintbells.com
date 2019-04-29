@@ -70,6 +70,8 @@ class ApiController < ActionController::Base
           email = data['customer']['email']
           shopify_customer = ShopifyAPI::Customer.search(query: "#{email}")
         end
+
+        # if shopify_customer[0].blank?
         unless shopify_customer[0]
           create_customer(data)
         end
