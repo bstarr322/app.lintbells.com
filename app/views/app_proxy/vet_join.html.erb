@@ -1,0 +1,112 @@
+{% if customer %}
+  <script type="text/javascript">location.href = "https://us.lintbells.com";</script>
+{% else %}
+  <style type="text/css">
+    .submit-overlay {position: fixed;top: 0;left: 0;width: 100%;height: 100vh; background-color: rgba(255, 255,255, 0.7); z-index: 99999;display: none;}
+    .submit-overlay.active {display: block;}
+    .submit-overlay .load-more__icon {position: absolute;top: 50%;left: 50%; display: inline-block;-ms-transform: translate(-50%,-50%);-webkit-transform: translate(-50%,-50%);transform: translate(-50%,-50%);width: 32px;height: 32px;opacity: 1}
+  </style>
+  <div class="submit-overlay" id="submitOverlay">
+    <span class="load-more__icon"></span>
+  </div>
+
+  <a name="pagecontent" id="pagecontent"></a>
+
+  <section class="doggies-info center">
+    <div class="container">
+      <h1>Create Veterinarian Account</h1>
+      <form method="post" action="https://us.lintbells.com/apps/customer-1/veterinarian/join" id="create_vet_customer">
+        <div class="create-customer" style="max-width: 500px;margin: 0 auto;">
+          <input type="hidden" name="customer[tags]" value="newsletter,veterinarian" required="required" />
+          <div id="first_name" class="clearfix large_form">
+            <label for="first_name" class="login">{{ 'customer.register.first_name' | t }}*</label>
+            <input type="text" value="" name="customer[first_name]" id="first_name" class="large" size="30" required="required" />
+          </div>
+
+          <div id="last_name" class="clearfix large_form">
+            <label for="last_name" class="login">{{ 'customer.register.last_name' | t }}</label>
+            <input type="text" value="" name="customer[last_name]" id="last_name" class="large" size="30" />
+          </div>
+
+          <div id="email" class="clearfix large_form">
+            <label for="email" class="login">{{ 'customer.register.email' | t }}*</label>
+            <input type="email" value="" name="customer[email]" id="email" class="large" size="30" required="required" />
+          </div>
+
+          <div id="title" class="clearfix large_form">
+            <label for="title" class="login">Title*</label>
+            <select name="customer[title]" id="title" class="large" required="required">
+              <option value="Veterinarian/Owner">Veterinarian/Owner</option>
+              <option value="Veterinarian/Associate">Veterinarian/Associate</option>
+              <option value="Veterinary Technician">Veterinary Technician</option>
+              <option value="Veterinary Nurse">Veterinary Nurse</option>
+              <option value="Practice Manager">Practice Manager</option>
+              <option value="Veterinary Student">Veterinary Student</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <label for="address_address1">{{ 'customer.addresses.address1' | t }}*</label>
+          <input type="text" id="address_address1" class="address_form" name="customer[address1]" value="" autocapitalize="words" required="required">
+
+          <label for="address_address2">{{ 'customer.addresses.address2' | t }}</label>
+          <input type="text" id="address_address2" class="address_form" name="customer[address2]" value="" autocapitalize="words">
+          
+          <label for="address_city">{{ 'customer.addresses.city' | t }}*</label>
+          <input type="text" id="address_city" class="address_form" name="customer[city]" value="" autocapitalize="words" required="required">
+          
+          <div style="display: none;">
+            <label for="address_country">{{ 'customer.addresses.country' | t }}*</label>
+            <select id="address_country" name="customer[country]" required="required">{{ country_option_tags }}</select>
+          </div>
+
+          <div id="address_province_container" style="display:none">
+            <label for="address_province">{{ 'customer.addresses.province' | t }}*</label>
+            <select id="address_province" class="address_form" name="customer[province]" data-default="" required="required"></select>
+          </div>
+
+          <div>
+            <label for="address_zip">{{ 'customer.addresses.zip' | t }}*</label>
+            <input type="text" id="address_zip" class="address_form" name="customer[zip]" value="" autocapitalize="characters" required="required">
+          </div>
+
+          <div id="password" class="clearfix large_form">
+            <label for="password" class="login">{{ 'customer.register.password' | t }}*</label>
+            <input type="password" value="" name="customer[password]" id="password" class="large password" size="30" required="required" />
+          </div>
+          <div class="text-left">
+            <input type="checkbox" id="customer_agree_terms" name="customer[agree_terms]" required="required">
+            <label for="customer_agree_terms" style="display: inline;margin-left: 5px;">Terms of Use</label>
+            <p style="padding-left: 15px">
+              1. I agree to the Terms of Use and Privacy Policy<br>
+              2. I hereby certify that the above information is true and complete.
+            </p>
+          </div>
+          <div class="acceptsMarketing text-left">
+            <input type="checkbox" id="customer_accepts_marketing" name="customer[accepts_marketing]">
+            <label for="customer_accepts_marketing">Join our mailing list?</label>
+            <p style="font-size: 14px;padding-left: 15px">Emails and other marketing communications from Lintbells Veterinary, including offers or promotions contained therein, are intended for and available to United States residents only. By clicking "Join Now", I certify that I am a resident of the United States and at least 18 years of age.</p>
+          </div>
+
+          <div class="action_bottom">
+            <input class="btn action_button" type="submit" value="{{ 'customer.register.sign_up' | t }}" style="float: none;" />
+            <p class="left" style="padding-top: 8px;">
+              {{ 'customer.register.returning_customer_label' | t }} {{ 'customer.register.sign_in_html' | t | customer_login_link }}
+            </p>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  {{ "shopify_common.js" | shopify_asset_url | script_tag }}
+  {{ "customer_area.js"  | shopify_asset_url | script_tag }}
+  <script type="text/javascript" charset="utf-8" data-no-instant>
+    // initialize observers on address selectors
+    new Shopify.CountryProvinceSelector('address_country', 'address_province', {hideElement: 'address_province_container'});
+
+    document.getElementById('create_vet_customer').addEventListener('submit', function(evt){
+      document.getElementById("submitOverlay").className = 'submit-overlay active';
+    });
+  </script>
+{% endif %}

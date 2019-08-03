@@ -136,6 +136,8 @@ GEM
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
     jwt (2.1.0)
+    klaviyo_api (1.6.0)
+      activeresource (~> 5.1.0)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -293,6 +295,7 @@ DEPENDENCIES
   dotenv-rails
   http
   jbuilder (~> 2.5)
+  klaviyo_api (~> 1.3)
   listen (>= 3.0.5, < 3.2)
   pg
   puma (~> 3.11)
