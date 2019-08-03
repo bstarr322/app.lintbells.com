@@ -122,7 +122,7 @@ class AppProxyController < ApplicationController
               member.destroy
             end
             
-            member = KlaviyoAPI::ListMember.create vet_params.slice(:first_name, :last_name, :email, :accepts_marketing, :tags).merge(vet_meta_params).merge(address_params).permit!.merge(list_id: ENV["KLAVIYO_LIST_ID"])
+            member = KlaviyoAPI::ListMember.create vet_params.slice(:first_name, :last_name, :email, :accepts_marketing, :tags).merge(vet_meta_params).merge(address_params).permit!.merge(list_id: ENV["KLAVIYO_LIST_ID"]).merge(vet_title: vet_meta_params[:title])
           end
         end
         
