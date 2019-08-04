@@ -110,6 +110,12 @@ class AppProxyController < ApplicationController
           namespace: "veterinarian"
           )
         customer_meta.push(
+          key: "clinic_name",
+          value: "#{vet_meta_params[:clinic_name]}",
+          value_type: "string",
+          namespace: "veterinarian"
+          )
+        customer_meta.push(
           key: "agree_terms",
           value: "#{vet_meta_params[:agree_terms]}",
           value_type: "string",
@@ -142,14 +148,14 @@ class AppProxyController < ApplicationController
   
   private
   def customer_params
-    params.require(:customer).permit(:first_name, :last_name, :email, :password, :accepts_marketing, :title, :agree_terms, :address1, :address2, :city, :province, :country, :zip, :tags)
+    params.require(:customer).permit(:first_name, :last_name, :email, :password, :accepts_marketing, :title, :agree_terms, :address1, :address2, :city, :province, :country, :zip, :tags, :clinic_name)
   end
   def vet_params
     customer_params.slice(:first_name, :last_name, :email, :password, :accepts_marketing, :tags)
   end
 
   def vet_meta_params
-    customer_params.slice(:title, :agree_terms)
+    customer_params.slice(:title, :agree_terms, :clinic_name)
   end
 
   def address_params
