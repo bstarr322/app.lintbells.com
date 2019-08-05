@@ -95,12 +95,13 @@
             <p style="font-size: 14px;padding-left: 15px">Emails and other marketing communications from Lintbells Veterinary, including offers or promotions contained therein, are intended for and available to United States residents only. By clicking "Join Now", I certify that I am a resident of the United States and at least 18 years of age.</p>
           </div>
 
-          <div class="action_bottom">
-            <input class="btn action_button" type="submit" value="{{ 'customer.register.sign_up' | t }}" style="float: none;" />
-            <p class="left" style="padding-top: 8px;">
-              {{ 'customer.register.returning_customer_label' | t }} {{ 'customer.register.sign_in_html' | t | customer_login_link }}
-            </p>
+          <div class="action_bottom clearfix">
+            <input class="btn action_button left" type="submit" value="{{ 'customer.register.sign_up' | t }}" style="float: none;" />
           </div>
+          <p style="padding-top: 8px;text-align: left; display: flex; align-items: center;">
+            {{ 'customer.register.returning_customer_label' | t }}
+            <a href="/account/login" id="customer_login_link" class="action_button" style="background: #f2f2f2;border: none;color: inherit;">{{ 'customer.register.sign_in_html' | t }}</a>
+          </p>
         </div>
       </form>
     </div>
