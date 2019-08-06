@@ -144,9 +144,12 @@ class AppProxyController < ApplicationController
         end
 
         if customer_id.presence
+          puts "Customer ID: #{customer_id}"
           response = HTTP.accept("application/json").headers("X-Shopify-Access-Token" => "#{shop.shopify_token}").put("https://#{shop.shopify_domain}/admin/api/2019-04/customers/#{customer_id}.json",
             :json => { :customer => vet_params.merge(metafields: customer_meta).merge(addresses: [address_params]).merge(password_confirmation: vet_params[:password]).merge(id: customer_id) }
           )
+          puts { :customer => vet_params.merge(metafields: customer_meta).merge(addresses: [address_params]).merge(password_confirmation: vet_params[:password]).merge(id: customer_id) }
+          puts response.inspect
         else
           customer = ShopifyAPI::Customer.create vet_params.merge(metafields: customer_meta).merge(addresses: [address_params]).merge(password_confirmation: vet_params[:password])
         end
