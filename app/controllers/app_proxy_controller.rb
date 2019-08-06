@@ -151,7 +151,7 @@ class AppProxyController < ApplicationController
           puts vet_params.merge(metafield: customer_meta).merge(addresses: [address_params.to_h]).merge(password_confirmation: vet_params[:password]).merge(id: customer_id)
           puts response.inspect
         else
-          customer = ShopifyAPI::Customer.create vet_params.merge(metafields: customer_meta).merge(addresses: [address_params]).merge(password_confirmation: vet_params[:password])
+          customer = ShopifyAPI::Customer.create vet_params.merge(metafield: customer_meta).merge(addresses: [address_params]).merge(password_confirmation: vet_params[:password])
         end
       end
     rescue Exception => e
