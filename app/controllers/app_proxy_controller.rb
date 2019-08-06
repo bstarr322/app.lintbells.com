@@ -141,7 +141,7 @@ class AppProxyController < ApplicationController
         end
 
         if customer_id.presence
-          HTTP.headers("X-Shopify-Access-Token" => "#{shop.shopify_token}").put("https://#{shop.shopify_domain}/admin/api/2018-04/customers/#{customer_id}.json",
+          HTTP.headers("X-Shopify-Access-Token" => "#{shop.shopify_token}").put("https://#{shop.shopify_domain}/admin/api/2019-04/customers/#{customer_id}.json",
             :json => vet_params.merge(metafields: customer_meta).merge(addresses: [address_params]).merge(password_confirmation: vet_params[:password])
           )
         else
