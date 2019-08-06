@@ -157,6 +157,20 @@ class ApiController < ActionController::Base
     redirect_to "https://us.lintbells.com/account"
   end
 
+  def search
+    # @shop = Shop.first
+    # customer = nil
+    # response = HTTP.headers("X-Shopify-Access-Token" => "#{@shop.shopify_token}").get("https://#{@shop.shopify_domain}/admin/api/2019-04/customers/search.json?query=email:obulten22@gmail.com").body.to_s
+    # customer = nil
+    # if response.presence && response["customers"].presence
+    #   customer = ShopifyAPI::Customer.find(response["customers"][0]["id"])
+    # end
+    # @shop.with_shopify_session do
+    #   customer = ShopifyAPI::Customer.search({query: "email:obulten22@gmail.com"})
+    # end
+    render json: customer, status: :ok
+  end
+
   private
   def get_rule_data(response)
     get_rule /admin\/price_rules[\w\d\/]+/.match(response).to_s
