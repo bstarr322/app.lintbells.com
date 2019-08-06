@@ -126,7 +126,7 @@ class AppProxyController < ApplicationController
         response = HTTP.headers("X-Shopify-Access-Token" => "#{shop.shopify_token}").get("https://#{shop.shopify_domain}/admin/api/2019-04/customers/search.json?query=email:#{vet_params[:email]}").body.to_s
         customer_id = nil
         if response.presence && response["customers"].presence
-          customer_id = response["customers"][0]["id"])
+          customer_id = response["customers"][0]["id"]
         end
 
         if vet_params[:accepts_marketing]
