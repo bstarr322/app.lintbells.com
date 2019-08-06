@@ -152,6 +152,9 @@ class AppProxyController < ApplicationController
           puts response.inspect
         else
           customer = ShopifyAPI::Customer.create vet_params.merge(metafield: customer_meta).merge(addresses: [address_params]).merge(password_confirmation: vet_params[:password])
+          response = HTTP.accept("application/json").headers("X-Shopify-Access-Token" => "#{shop.shopify_token}").put("https://#{shop.shopify_domain}/admin/api/2019-04/customers/#{customer.id}.json",
+            :json => { :customer => {metafield: customer_meta, id: customer.id} }
+          )
         end
       end
     rescue Exception => e
