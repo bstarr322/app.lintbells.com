@@ -125,8 +125,11 @@ class AppProxyController < ApplicationController
 
         response = HTTP.headers("X-Shopify-Access-Token" => "#{shop.shopify_token}").get("https://#{shop.shopify_domain}/admin/api/2019-04/customers/search.json?query=email:#{vet_params[:email]}").body.to_s
         customer_id = nil
-        if response.presence && response["customers"].presence
-          customer_id = response["customers"][0]["id"]
+        if response.presence
+          response = JSON.parse(response)
+          if response["customers"].presence
+            customer_id = response["customers"][0]["id"]
+          end
         end
 
         if vet_params[:accepts_marketing]
@@ -141,9 +144,11 @@ class AppProxyController < ApplicationController
         end
 
         if customer_id.presence
-          HTTP.headers("X-Shopify-Access-Token" => "#{shop.shopify_token}").put("https://#{shop.shopify_domain}/admin/api/2019-04/customers/#{customer_id}.json",
+          puts "Customer ID: #{customer_id}"
+          response = HTTP.headers("X-Shopify-Access-Token" => "#{shop.shopify_token}").put("https://#{shop.shopify_domain}/admin/api/2019-04/customers/#{customer_id}.json",
             :json => vet_params.merge(metafields: customer_meta).merge(addresses: [address_params]).merge(password_confirmation: vet_params[:password])
           )
+          puts response.inspect
         else
           customer = ShopifyAPI::Customer.create vet_params.merge(metafields: customer_meta).merge(addresses: [address_params]).merge(password_confirmation: vet_params[:password])
         end
