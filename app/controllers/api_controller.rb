@@ -6,6 +6,8 @@ class ApiController < ActionController::Base
   protect_from_forgery with: :null_session
   layout false
 
+  before_action :initialize_klaviyo, only: [:calculator_signup]
+  
   include ApplicationHelper
   def get_price_rule
     @shop = Shop.first
@@ -171,6 +173,22 @@ class ApiController < ActionController::Base
     render json: customer, status: :ok
   end
 
+  def calculator_signup
+    begin
+      @account.with_klaviyo_session do
+        member = KlaviyoAPI::ListMember.first params: { list_id: 'KspFw5', emails: params['email'] }
+        if member.present?
+          member.destroy
+        end
+        member = KlaviyoAPI::ListMember.create params.permit!.merge(list_id: 'KspFw5')
+        render json: member, status: :ok
+      end
+    rescue Exception => e
+      puts e
+      render json: {}, status: 404
+    end
+  end
+
   private
   def get_rule_data(response)
     get_rule /admin\/price_rules[\w\d\/]+/.match(response).to_s
@@ -184,6 +202,9 @@ class ApiController < ActionController::Base
     end
   end
 
+  def initialize_klaviyo
+    @account = Account.new ENV['KLAVIYO_API_KEY']
+  end
 
   def create_customer(data)
     shop = Shop.first

@@ -23,5 +23,6 @@ Rails.application.routes.draw do
   post '/modulus_update', to: 'api#modulus_update'
   post '/modulus_getdetails', to: 'api#modulus_getdetails'
   get '/search', to: 'api#search'
+  get '/calculator-signup', to: 'api#calculator_signup'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
