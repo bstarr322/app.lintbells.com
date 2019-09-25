@@ -1,0 +1,705 @@
+{% if customer %}
+  {% if customer.tags contains "veterinarian" %}
+    <script type="text/javascript">location.href = "https://us.lintbells.com/pages/yumove-advance-360";</script>
+  {% else %}
+    <script type="text/javascript">location.href = "https://us.lintbells.com";</script>
+  {% endif %}
+{% else %}
+  <style type="text/css">
+    .submit-overlay {position: fixed;top: 0;left: 0;width: 100%;height: 100vh; background-color: rgba(255, 255,255, 0.7); z-index: 99999;display: none;}
+    .submit-overlay.active {display: block;}
+    .submit-overlay .load-more__icon {position: absolute;top: 50%;left: 50%; display: inline-block;-ms-transform: translate(-50%,-50%);-webkit-transform: translate(-50%,-50%);transform: translate(-50%,-50%);width: 32px;height: 32px;opacity: 1}
+  </style>
+  
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+  <div class="submit-overlay" id="submitOverlay">
+    <span class="load-more__icon"></span>
+  </div>
+
+  <a name="pagecontent" id="pagecontent"></a>
+
+  <section class="doggies-info center">
+    <div class="container">
+      <h1>Create Veterinarian Account</h1>
+      <form method="post" action="https://us.lintbells.com/apps/customer/veterinarian/event-join" id="create_vet_customer">
+        <div class="create-customer" style="max-width: 500px;margin: 0 auto;">
+          <input type="hidden" name="customer[tags]" value="newsletter,veterinarian,events" required="required" />
+          <div id="first_name" class="clearfix large_form">
+            <label for="first_name" class="login">{{ 'customer.register.first_name' | t }}*</label>
+            <input type="text" value="" name="customer[first_name]" id="first_name" class="large" size="30" required="required" />
+          </div>
+
+          <div id="last_name" class="clearfix large_form">
+            <label for="last_name" class="login">{{ 'customer.register.last_name' | t }}</label>
+            <input type="text" value="" name="customer[last_name]" id="last_name" class="large" size="30" />
+          </div>
+
+          <div id="email" class="clearfix large_form">
+            <label for="email" class="login">{{ 'customer.register.email' | t }}*</label>
+            <input type="email" value="" name="customer[email]" id="email" class="large" size="30" required="required" />
+          </div>
+
+          <div id="title" class="clearfix large_form">
+            <label for="title" class="login">Title*</label>
+            <select name="customer[title]" id="title" class="large" required="required">
+              <option value="Veterinarian/Owner">Veterinarian/Owner</option>
+              <option value="Veterinarian/Associate">Veterinarian/Associate</option>
+              <option value="Veterinary Technician">Veterinary Technician</option>
+              <option value="Veterinary Nurse">Veterinary Nurse</option>
+              <option value="Practice Manager">Practice Manager</option>
+              <option value="Veterinary Student">Veterinary Student</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <label for="clinic_name">Clinic Name</label>
+          <input type="text" class="large" name="customer[clinic_name]" id="clinic_name">
+
+          <label for="dog_name">Dog Name</label>
+          <input type="text" class="large" name="customer[dog_name]" id="dog_name">
+
+          <label for="dog_age">Dog Age</label>
+          <select name="customer[dog_age]" id="dog_age" required="required">
+            <option value="0-12 months">0-12 months</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>
+          </select>
+
+          <label for="dog_weight">Dog Weight</label>
+          <select name="customer[dog_weight]" id="dog_weight" required="required">
+            <option value="small">0-15kg</option>
+            <option value="medium">16-30kg</option>
+            <option value="large">31-45kg</option>
+            <option value="very large">Over 45kg</option>
+          </select>
+
+          <label for="dog_breed">Dog Breed</label>
+          <input type="text" name="customer[dog_breed]" id="dog_breed" required="required" />
+
+          <label for="address_address1">{{ 'customer.addresses.address1' | t }}*</label>
+          <input type="text" id="address_address1" class="address_form" name="customer[address1]" value="" autocapitalize="words" required="required">
+
+          <label for="address_address2">{{ 'customer.addresses.address2' | t }}</label>
+          <input type="text" id="address_address2" class="address_form" name="customer[address2]" value="" autocapitalize="words">
+          
+          <label for="address_city">{{ 'customer.addresses.city' | t }}*</label>
+          <input type="text" id="address_city" class="address_form" name="customer[city]" value="" autocapitalize="words" required="required">
+          
+          <div style="display: none;">
+            <label for="address_country">{{ 'customer.addresses.country' | t }}*</label>
+            <select id="address_country" name="customer[country]" required="required">{{ country_option_tags }}</select>
+          </div>
+
+          <div id="address_province_container" style="display:none">
+            <label for="address_province">{{ 'customer.addresses.province' | t }}*</label>
+            <select id="address_province" class="address_form" name="customer[province]" data-default="" required="required"></select>
+          </div>
+
+          <div>
+            <label for="address_zip">{{ 'customer.addresses.zip' | t }}*</label>
+            <input type="text" id="address_zip" class="address_form" name="customer[zip]" value="" autocapitalize="characters" required="required">
+          </div>
+
+          <div id="password" class="clearfix large_form">
+            <label for="password" class="login">{{ 'customer.register.password' | t }}*</label>
+            <input type="password" value="" name="customer[password]" id="password" class="large password" size="30" required="required" />
+          </div>
+          <div class="text-left">
+            <input type="checkbox" id="customer_agree_terms" name="customer[agree_terms]" required="required">
+            <label for="customer_agree_terms" style="display: inline;margin-left: 5px;">Terms of Use</label>
+            <p style="padding-left: 15px">
+              1. I agree to the Terms of Use and Privacy Policy<br>
+              2. I hereby certify that the above information is true and complete.
+            </p>
+          </div>
+          <div class="acceptsMarketing text-left">
+            <input type="checkbox" id="customer_accepts_marketing" name="customer[accepts_marketing]">
+            <label for="customer_accepts_marketing">Join our mailing list?</label>
+            <p style="font-size: 14px;padding-left: 15px">Emails and other marketing communications from Lintbells Veterinary, including offers or promotions contained therein, are intended for and available to United States residents only.</p>
+            <br>
+            <p style="font-size: 14px;">By clicking "SIGN UP", I certify that I am a resident of the United States, a veterinary professional and at least 18 years of age.</p>
+          </div>
+
+          <div class="action_bottom clearfix">
+            <input class="btn action_button left" type="submit" value="{{ 'customer.register.sign_up' | t }}" />
+          </div>
+          <p style="padding-top: 8px;text-align: left; display: flex; align-items: center;">
+            {{ 'customer.register.returning_customer_label' | t }}
+            <a href="/account/login" id="customer_login_link" class="action_button" style="background: #f2f2f2;border: none;color: inherit;margin-left: 15px;">{{ 'customer.register.sign_in_html' | t }}</a>
+          </p>
+        </div>
+      </form>
+    </div>
+  </section>
+  <script src="{{ 'jquery.min.js' | asset_url }}"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" async defer></script>
+  
+  {{ "shopify_common.js" | shopify_asset_url | script_tag }}
+  {{ "customer_area.js"  | shopify_asset_url | script_tag }}
+  <script type="text/javascript" charset="utf-8" data-no-instant>
+    // initialize observers on address selectors
+    new Shopify.CountryProvinceSelector('address_country', 'address_province', {hideElement: 'address_province_container'});
+
+    document.getElementById('create_vet_customer').addEventListener('submit', function(evt){
+      document.getElementById("submitOverlay").className = 'submit-overlay active';
+    });
+
+    $(document).ready(function() {
+      var dogsBreed = ["Affenpinscher"
+        ,"Afghan Hound"
+        ,"Afghan Shepherd"
+        ,"Aidi"
+        ,"Airedale Terrier"
+        ,"Akbash"
+        ,"Akita"
+        ,"Alano Español"
+        ,"Alaskan husky"
+        ,"Alaskan Klee Kai"
+        ,"Alaskan Malamute"
+        ,"Alaunt"
+        ,"Alopekis"
+        ,"Alpine Dachsbracke"
+        ,"Alpine Mastiff"
+        ,"Alpine Spaniel"
+        ,"American Akita"
+        ,"American Bully"
+        ,"American Bulldog"
+        ,"American Cocker Spaniel"
+        ,"American English Coonhound"
+        ,"American Eskimo Dog"
+        ,"American Foxhound"
+        ,"American Hairless Terrier"
+        ,"American Pit Bull Terrier"
+        ,"American Staffordshire Terrier"
+        ,"American Water Spaniel"
+        ,"Anatolian Shepherd Dog"
+        ,"Andalusian Hound"
+        ,"Anglo-Français de Petite Vénerie"
+        ,"Appenzeller Sennenhund"
+        ,"Argentine Polar Dog"
+        ,"Ariegeois"
+        ,"Armant"
+        ,"Armenian Gampr dog"
+        ,"Artois Hound"
+        ,"Australian Cattle Dog"
+        ,"Australian Kelpie"
+        ,"Australian Shepherd"
+        ,"Australian Stumpy Tail Cattle Dog[10]"
+        ,"Australian Terrier"
+        ,"Austrian Black and Tan Hound"
+        ,"Austrian Pinscher"
+        ,"Azawakh"
+        ,"Bakharwal dog"
+        ,"Barbado da Terceira"
+        ,"Barbet"
+        ,"Basenji"
+        ,"Basque Shepherd Dog"
+        ,"Basset Artésien Normand"
+        ,"Basset Bleu de Gascogne"
+        ,"Basset Fauve de Bretagne"
+        ,"Basset Hound"
+        ,"Bavarian Mountain Hound"
+        ,"Beagle"
+        ,"Beagle-Harrier"
+        ,"Bearded Collie"
+        ,"Beauceron"
+        ,"Bedlington Terrier"
+        ,"Belgian Shepherd Dog (Groenendael)"
+        ,"Belgian Shepherd Dog (Laekenois)"
+        ,"Belgian Shepherd Dog (Malinois)"
+        ,"Belgian Shepherd Dog (Tervuren)"
+        ,"Bergamasco Shepherd"
+        ,"Berger Blanc Suisse"
+        ,"Berger Picard"
+        ,"Bernese Mountain Dog"
+        ,"Bichon Frisé"
+        ,"Billy"
+        ,"Black and Tan Coonhound"
+        ,"Black and Tan Virginia Foxhound"
+        ,"Black Norwegian Elkhound"
+        ,"Black Russian Terrier"
+        ,"Black Mouth Cur"
+        ,"Bloodhound"
+        ,"Blue Heeler"
+        ,"Blue Lacy"
+        ,"Blue Paul Terrier"
+        ,"Blue Picardy Spaniel"
+        ,"Bluetick Coonhound"
+        ,"Boerboel"
+        ,"Bohemian Shepherd"
+        ,"Bolognese"
+        ,"Border Collie"
+        ,"Border Terrier"
+        ,"Borzoi"
+        ,"Bosnian Coarse-haired Hound"
+        ,"Boston Terrier"
+        ,"Bouvier des Ardennes"
+        ,"Bouvier des Flandres"
+        ,"Boxer"
+        ,"Boykin Spaniel"
+        ,"Bracco Italiano"
+        ,"Braque d'Auvergne"
+        ,"Braque de l'Ariege"
+        ,"Braque du Bourbonnais"
+        ,"Braque du Puy"
+        ,"Braque Francais"
+        ,"Braque Saint-Germain"
+        ,"Brazilian Dogo"
+        ,"Brazilian Terrier"
+        ,"Briard"
+        ,"Briquet Griffon Vendéen"
+        ,"Brittany"
+        ,"Broholmer"
+        ,"Bruno Jura Hound"
+        ,"Brussels Griffon"
+        ,"Bucovina Shepherd Dog"
+        ,"Bull and Terrier"
+        ,"Bull Terrier"
+        ,"Bulldog"
+        ,"Bullenbeisser"
+        ,"Bullmastiff"
+        ,"Bully Kutta"
+        ,"Burgos Pointer"
+        ,"Cairn Terrier"
+        ,"Canaan Dog"
+        ,"Canadian Eskimo Dog"
+        ,"Cane Corso"
+        ,"Cantabrian Water Dog"
+        ,"Cão da Serra de Aires"
+        ,"Cão de Castro Laboreiro"
+        ,"Cão de Gado Transmontano"
+        ,"Cão Fila de São Miguel"
+        ,"Carolina Dog"
+        ,"Carpathian Shepherd Dog"
+        ,"Catalan Sheepdog"
+        ,"Caucasian Shepherd Dog"
+        ,"Cavalier King Charles Spaniel"
+        ,"Central Asian Shepherd Dog"
+        ,"Cesky Fousek"
+        ,"Cesky Terrier"
+        ,"Chesapeake Bay Retriever"
+        ,"Chien Français Blanc et Noir"
+        ,"Chien Français Blanc et Orange"
+        ,"Chien Français Tricolore"
+        ,"Chien-gris"
+        ,"Chihuahua"
+        ,"Chilean Terrier"
+        ,"Chinese Chongqing Dog"
+        ,"Chinese Crested Dog"
+        ,"Chinese Imperial Dog"
+        ,"Chinook"
+        ,"Chippiparai"
+        ,"Chiribaya Dog"
+        ,"Chow Chow"
+        ,"Cierny Sery"
+        ,"Cirneco dell'Etna"
+        ,"Clumber Spaniel"
+        ,"Collie, Rough"
+        ,"Collie, Smooth"
+        ,"Combai"
+        ,"Cordoba Fighting Dog"
+        ,"Coton de Tulear"
+        ,"Cretan Hound"
+        ,"Croatian Sheepdog"
+        ,"Cumberland Sheepdog"
+        ,"Curly-Coated Retriever"
+        ,"Cursinu"
+        ,"Czechoslovakian Wolfdog"
+        ,"Dachshund"
+        ,"Dalbo dog"
+        ,"Dalmatian"
+        ,"Dandie Dinmont Terrier"
+        ,"Danish-Swedish Farmdog"
+        ,"Deutsche Bracke"
+        ,"Doberman Pinscher"
+        ,"Dogo Argentino"
+        ,"Dogo Cubano"
+        ,"Dogue de Bordeaux"
+        ,"Drentse Patrijshond"
+        ,"Drever"
+        ,"Dunker"
+        ,"Dutch Shepherd"
+        ,"Dutch Smoushond"
+        ,"East Siberian Laika"
+        ,"East European Shepherd"
+        ,"Elo"
+        ,"English Cocker Spaniel"
+        ,"English Foxhound"
+        ,"English Mastiff"
+        ,"English Pointer"
+        ,"English Setter"
+        ,"English Shepherd"
+        ,"English Springer Spaniel"
+        ,"English Toy Terrier (Black & Tan)"
+        ,"English Water Spaniel"
+        ,"English White Terrier"
+        ,"Entlebucher Mountain Dog"
+        ,"Estonian Hound"
+        ,"Estrela Mountain Dog"
+        ,"Eurasier"
+        ,"Eurohound"
+        ,"Field Spaniel"
+        ,"Fila Brasileiro"
+        ,"Finnish Hound"
+        ,"Finnish Lapphund"
+        ,"Finnish Spitz"
+        ,"Flat-Coated Retriever"
+        ,"Fox Terrier, Smooth"
+        ,"Fox Terrier, Wire"
+        ,"French Brittany"
+        ,"French Bulldog"
+        ,"French Spaniel"
+        ,"Gaddi Kutta"
+        ,"Galgo Español"
+        ,"Galician Shepherd Dog"
+        ,"Garafian Shepherd"
+        ,"Gascon Saintongeois"
+        ,"Georgian Shepherd"
+        ,"German Longhaired Pointer"
+        ,"German Pinscher"
+        ,"German Roughhaired Pointer"
+        ,"German Shepherd Dog"
+        ,"German Shorthaired Pointer"
+        ,"German Spaniel"
+        ,"German Spitz"
+        ,"German Wirehaired Pointer"
+        ,"Giant Schnauzer"
+        ,"Glen of Imaal Terrier"
+        ,"Golden Retriever"
+        ,"Gordon Setter"
+        ,"Gran Mastín de Borínquen"
+        ,"Grand Anglo-Français Blanc et Noir"
+        ,"Grand Anglo-Français Blanc et Orange"
+        ,"Grand Anglo-Français Tricolore"
+        ,"Grand Basset Griffon Vendéen"
+        ,"Grand Bleu de Gascogne"
+        ,"Grand Griffon Vendéen"
+        ,"Great Dane"
+        ,"Great Pyrenees"
+        ,"Greater Swiss Mountain Dog"
+        ,"Greek Harehound"
+        ,"Greek Shepherd"
+        ,"Greenland Dog"
+        ,"Greyhound"
+        ,"Griffon Bleu de Gascogne"
+        ,"Griffon Fauve de Bretagne"
+        ,"Griffon Nivernais"
+        ,"Guatemalan Dogo"
+        ,"Gull Terrier"
+        ,"Hamiltonstövare"
+        ,"Hanover Hound"
+        ,"Hare Indian Dog"
+        ,"Harrier"
+        ,"Havanese"
+        ,"Hawaiian Poi Dog"
+        ,"Himalayan Sheepdog"
+        ,"Hokkaido"
+        ,"Hortaya borzaya"
+        ,"Hovawart"
+        ,"Huntaway"
+        ,"Hygen Hound"
+        ,"Ibizan Hound"
+        ,"Icelandic Sheepdog"
+        ,"Indian pariah dog"
+        ,"Indian Spitz"
+        ,"Irish Red and White Setter"
+        ,"Irish Setter"
+        ,"Irish Terrier"
+        ,"Irish Water Spaniel"
+        ,"Irish Wolfhound"
+        ,"Istrian Coarse-haired Hound"
+        ,"Istrian Short-haired Hound"
+        ,"Italian Greyhound"
+        ,"Jack Russell Terrier"
+        ,"Jagdterrier"
+        ,"Swedish Elkhound"
+        ,"Japanese Chin"
+        ,"Japanese Spitz"
+        ,"Japanese Terrier"
+        ,"Jindo"
+        ,"Jonangi"
+        ,"Kaikadi dog"
+        ,"Kai Ken"
+        ,"Kangal Shepherd Dog"
+        ,"Kanni"
+        ,"Karakachan dog"
+        ,"Karelian Bear Dog"
+        ,"Karst Shepherd"
+        ,"Keeshond"
+        ,"Kerry Beagle"
+        ,"Kerry Blue Terrier"
+        ,"King Charles Spaniel"
+        ,"King Shepherd"
+        ,"Kintamani"
+        ,"Kishu Ken"
+        ,"Komondor"
+        ,"Koolie"
+        ,"Koyun dog"
+        ,"Kromfohrländer"
+        ,"Kumaon Mastiff"
+        ,"Kunming Wolfdog"
+        ,"Kurī"
+        ,"Kuvasz"
+        ,"Kyi-Leo"
+        ,"Labrador Husky"
+        ,"Labrador Retriever"
+        ,"Lagotto Romagnolo"
+        ,"Lakeland Terrier"
+        ,"Lancashire Heeler"
+        ,"Landseer"
+        ,"Lapponian Herder"
+        ,"Lapponian Shepherd"
+        ,"Leonberger"
+        ,"Lhasa Apso"
+        ,"Lithuanian Hound"
+        ,"Louisiana Catahoula Leopard Dog"
+        ,"Löwchen"
+        ,"Mackenzie River husky"
+        ,"Magyar agár"
+        ,"Mahratta Greyhound"
+        ,"Maltese"
+        ,"Manchester Terrier"
+        ,"Maremma Sheepdog"
+        ,"Marquesan Dog"
+        ,"McNab dog"
+        ,"Miniature American Shepherd"
+        ,"Miniature Bull Terrier"
+        ,"Miniature Fox Terrier"
+        ,"Miniature Pinscher"
+        ,"Miniature Schnauzer"
+        ,"Miniature Shar Pei"
+        ,"Molossus"
+        ,"Molossus of Epirus"
+        ,"Montenegrin Mountain Hound"
+        ,"Moscow Watchdog"
+        ,"Moscow Water Dog"
+        ,"Mountain Cur"
+        ,"Mucuchies"
+        ,"Mudhol Hound"
+        ,"Mudi"
+        ,"Münsterländer, Large"
+        ,"Münsterländer, Small"
+        ,"Neapolitan Mastiff"
+        ,"Nederlandse Kooikerhondje"
+        ,"Newfoundland"
+        ,"New Zealand Heading Dog"
+        ,"Norfolk Spaniel"
+        ,"Norfolk Terrier"
+        ,"Norrbottenspets"
+        ,"North Country Beagle"
+        ,"Northern Inuit Dog"
+        ,"Norwegian Buhund"
+        ,"Norwegian Elkhound"
+        ,"Norwegian Lundehund"
+        ,"Norwich Terrier"
+        ,"Nova Scotia Duck Tolling Retriever"
+        ,"Old Croatian Sighthound"
+        ,"Old Danish Pointer"
+        ,"Old English Bulldog"
+        ,"Old English Sheepdog"
+        ,"Old English Terrier"
+        ,"Old German Shepherd Dog"
+        ,"Old Spanish Pointer"
+        ,"Old Time Farm Shepherd"
+        ,"Olde English Bulldogge"
+        ,"Otterhound"
+        ,"Pachon Navarro"
+        ,"Pandikona"
+        ,"Paisley Terrier"
+        ,"Papillon"
+        ,"Parson Russell Terrier"
+        ,"Pastore della Lessinia e del Lagorai"
+        ,"Patterdale Terrier"
+        ,"Pekingese"
+        ,"Perro de Pastor Mallorquin"
+        ,"Perro de Presa Canario"
+        ,"Perro de Presa Mallorquin"
+        ,"Peruvian Inca Orchid"
+        ,"Petit Basset Griffon Vendéen"
+        ,"Petit Bleu de Gascogne"
+        ,"Phalène"
+        ,"Pharaoh Hound"
+        ,"Phu Quoc Ridgeback"
+        ,"Picardy Spaniel"
+        ,"Plummer Terrier"
+        ,"Plott Hound"
+        ,"Podenco Canario"
+        ,"Poitevin"
+        ,"Polish Greyhound"
+        ,"Polish Hound"
+        ,"Polish Hunting Dog"
+        ,"Polish Lowland Sheepdog"
+        ,"Polish Tatra Sheepdog"
+        ,"Pomeranian"
+        ,"Pont-Audemer Spaniel"
+        ,"Poodle"
+        ,"Porcelaine"
+        ,"Portuguese Podengo"
+        ,"Portuguese Pointer"
+        ,"Portuguese Water Dog"
+        ,"Posavac Hound"
+        ,"Potsdam Greyhound"
+        ,"Pražský Krysařík"
+        ,"Pudelpointer"
+        ,"Pug"
+        ,"Puli"
+        ,"Pumi"
+        ,"Pungsan dog"
+        ,"Pyrenean Mastiff"
+        ,"Pyrenean Shepherd"
+        ,"Rafeiro do Alentejo"
+        ,"Rajapalayam"
+        ,"Rampur Greyhound"
+        ,"Rastreador Brasileiro"
+        ,"Rat Terrier"
+        ,"Ratonero Bodeguero Andaluz"
+        ,"Ratonero Mallorquin"
+        ,"Ratonero Murciano de Huerta"
+        ,"Ratonero Valenciano"
+        ,"Redbone Coonhound"
+        ,"Rhodesian Ridgeback"
+        ,"Romanian Mioritic Shepherd Dog"
+        ,"Romanian Raven Shepherd Dog"
+        ,"Rottweiler"
+        ,"Russian Salon Dog"
+        ,"Russian Spaniel"
+        ,"Russian Toy"
+        ,"Russian Tracker"
+        ,"Russo-European Laika"
+        ,"Russell Terrier"
+        ,"Saarloos Wolfdog"
+        ,"Sabueso Español"
+        ,"Sabueso fino Colombiano"
+        ,"Saint Bernard"
+        ,"Saint John's water dog"
+        ,"Saint-Usuge Spaniel"
+        ,"Sakhalin Husky"
+        ,"Salish Wool Dog"
+        ,"Saluki"
+        ,"Samoyed"
+        ,"Sapsali"
+        ,"Šarplaninac"
+        ,"Schapendoes"
+        ,"Schillerstövare"
+        ,"Schipperke"
+        ,"Schweizer Laufhund"
+        ,"Schweizerischer Niederlaufhund"
+        ,"Scotch Collie"
+        ,"Scottish Deerhound"
+        ,"Scottish Terrier"
+        ,"Sealyham Terrier"
+        ,"Segugio Italiano"
+        ,"Seppala Siberian Sleddog"
+        ,"Serbian Hound"
+        ,"Serbian Tricolour Hound"
+        ,"Seskar Seal Dog"
+        ,"Shar Pei"
+        ,"Shetland Sheepdog"
+        ,"Shiba Inu"
+        ,"Shih Tzu"
+        ,"Shikoku"
+        ,"Shiloh Shepherd"
+        ,"Siberian Husky"
+        ,"Silken Windhound"
+        ,"Silky Terrier"
+        ,"Sinhala Hound"
+        ,"Skye Terrier"
+        ,"Sloughi"
+        ,"Slovak Cuvac"
+        ,"Slovakian Wirehaired Pointer"
+        ,"Slovenský kopov"
+        ,"Smålandsstövare"
+        ,"Small Greek Domestic Dog"
+        ,"Soft-Coated Wheaten Terrier"
+        ,"South Russian Ovcharka"
+        ,"Southern Hound"
+        ,"Spanish Mastiff"
+        ,"Spanish Water Dog"
+        ,"Spinone Italiano"
+        ,"Sporting Lucas Terrier"
+        ,"Stabyhoun"
+        ,"Staffordshire Bull Terrier"
+        ,"Standard Schnauzer"
+        ,"Stephens Cur"
+        ,"Styrian Coarse-haired Hound"
+        ,"Sussex Spaniel"
+        ,"Swedish Lapphund"
+        ,"Swedish Vallhund"
+        ,"Tahitian Dog"
+        ,"Tahltan Bear Dog"
+        ,"Taigan"
+        ,"Taiwan Dog"
+        ,"Talbot Hound"
+        ,"Tamaskan Dog"
+        ,"Teddy Roosevelt Terrier"
+        ,"Telomian"
+        ,"Tenterfield Terrier"
+        ,"Terceira Mastiff"
+        ,"Thai Bangkaew Dog"
+        ,"Thai Ridgeback"
+        ,"Tibetan Mastiff"
+        ,"Tibetan Spaniel"
+        ,"Tibetan Terrier"
+        ,"Tornjak"
+        ,"Tosa"
+        ,"Toy Bulldog"
+        ,"Toy Fox Terrier"
+        ,"Toy Manchester Terrier"
+        ,"Toy Trawler Spaniel"
+        ,"Transylvanian Hound"
+        ,"Treeing Cur"
+        ,"Treeing Tennessee Brindle"
+        ,"Treeing Walker Coonhound"
+        ,"Trigg Hound"
+        ,"Tweed Water Spaniel"
+        ,"Tyrolean Hound"
+        ,"Cimarrón Uruguayo"
+        ,"Vanjari Hound"
+        ,"Villano de Las Encartaciones"
+        ,"Villanuco de Las Encartaciones"
+        ,"Vizsla"
+        ,"Volpino Italiano"
+        ,"Weimaraner"
+        ,"Welsh Corgi, Cardigan"
+        ,"Welsh Corgi, Pembroke"
+        ,"Welsh Sheepdog"
+        ,"Welsh Springer Spaniel"
+        ,"Welsh Terrier"
+        ,"West Highland White Terrier"
+        ,"West Siberian Laika"
+        ,"Westphalian Dachsbracke"
+        ,"Wetterhoun"
+        ,"Whippet"
+        ,"White Shepherd"
+        ,"Wirehaired Pointing Griffon"
+        ,"Wirehaired Vizsla"
+        ,"Xiasi Dog"
+        ,"Xoloitzcuintli"
+        ,"Yakutian Laika"
+        ,"Yorkshire Terrier"];
+      
+      $('#dog_breed').autocomplete({
+        source: dogsBreed
+      });
+    });
+  </script>
+{% endif %}

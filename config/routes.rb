@@ -16,6 +16,8 @@ Rails.application.routes.draw do
     get '/account', to: 'account#index'
     get '/veterinarian/join', action: 'vet_join'
     post '/veterinarian/join', action: 'vet_create'
+    get '/veterinarian/event-join', action: 'vet_event_join'
+    post '/veterinarian/event-join', action: 'vet_event_create'
   end
   get '/get_price_rule', to: 'api#get_price_rule'
   post '/multipass', to: 'api#multipass'
