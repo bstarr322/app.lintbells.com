@@ -1,7 +1,7 @@
 class AppProxyController < ApplicationController
   include ShopifyApp::AppProxyVerification
 
-  before_action :initialize_klaviyo, only: [:vet_create]
+  before_action :initialize_klaviyo, only: [:vet_create, :vet_event_create]
 
   include ApplicationHelper
 
