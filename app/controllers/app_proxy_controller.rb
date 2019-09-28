@@ -160,7 +160,7 @@ class AppProxyController < ApplicationController
     rescue Exception => e
       puts e
     end
-    redirect_to "https://us.lintbells.com/account/login/multipass/#{multipass_token(vet_params)}"
+    redirect_to "https://us.lintbells.com/account/login/multipass/#{multipass_token(vet_params, ENV["VET_PAGE"])}"
   end
 
   def vet_join
@@ -255,7 +255,7 @@ class AppProxyController < ApplicationController
     rescue Exception => e
       puts e
     end
-    redirect_to "https://us.lintbells.com/account/login/multipass/#{multipass_token(vet_params)}"
+    redirect_to "https://us.lintbells.com/account/login/multipass/#{multipass_token(vet_params, ENV["VET_REDIRECT_FOR_EVENT"])}"
   end
 
   def vet_event_join
@@ -292,12 +292,12 @@ class AppProxyController < ApplicationController
     self
   end
 
-  def multipass_token(data)
+  def multipass_token(data, redirect_to)
     customer_data = {
       email: data[:email],
       first_name: data[:first_name],
       last_name: data[:last_name],
-      return_to: ENV["VET_PAGE"]
+      return_to: redirect_to
     }
 
     ShopifyMultipass.new(ENV['SHOPIFY_MULTIPASS_SECRET']).generate_token(customer_data)
