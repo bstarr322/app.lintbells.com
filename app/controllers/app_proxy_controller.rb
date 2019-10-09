@@ -229,12 +229,12 @@ class AppProxyController < ApplicationController
 
         if vet_params[:accepts_marketing]
           @account.with_klaviyo_session do
-            member = KlaviyoAPI::ListMember.first params: { list_id: ENV["KLAVIYO_LIST_ID"], emails: vet_params[:email] }
+            member = KlaviyoAPI::ListMember.first params: { list_id: ENV["KLAVIYO_EVENT_LIST_ID"], emails: vet_params[:email] }
             if member.present?
               member.destroy
             end
             
-            member = KlaviyoAPI::ListMember.create vet_params.slice(:first_name, :last_name, :email, :accepts_marketing, :tags).merge(vet_meta_params).merge(address_params).permit!.merge(list_id: ENV["KLAVIYO_LIST_ID"]).merge(vet_title: vet_meta_params[:title])
+            member = KlaviyoAPI::ListMember.create vet_params.slice(:first_name, :last_name, :email, :accepts_marketing, :tags).merge(vet_meta_params).merge(address_params).permit!.merge(list_id: ENV["KLAVIYO_EVENT_LIST_ID"]).merge(vet_title: vet_meta_params[:title])
           end
         end
 
