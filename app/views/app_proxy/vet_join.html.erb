@@ -19,6 +19,7 @@
   <section class="doggies-info center">
     <div class="container">
       <h1>Create Veterinarian Account</h1>
+      <p>Must be a veterinary professional to apply</p>
       <form method="post" action="https://us.lintbells.com/apps/customer/veterinarian/join" id="create_vet_customer">
         <div class="create-customer" style="max-width: 500px;margin: 0 auto;">
           <input type="hidden" name="customer[tags]" value="newsletter,veterinarian" required="required" />
@@ -101,8 +102,8 @@
             <input class="btn action_button left" type="submit" value="{{ 'customer.register.sign_up' | t }}" />
           </div>
           <p style="padding-top: 8px;text-align: left; display: flex; align-items: center;">
-            {{ 'customer.register.returning_customer_label' | t }}
-            <a href="/account/login" id="customer_login_link" class="action_button" style="background: #f2f2f2;border: none;color: inherit;margin-left: 15px;">{{ 'customer.register.sign_in_html' | t }}</a>
+            Returning Veterinary Professionals?
+            <a href="/account/login" id="customer_login_link" class="action_button" style="background: #f2f2f2;border: none;color: inherit;margin-left: 15px;">Login Here</a>
           </p>
         </div>
       </form>
