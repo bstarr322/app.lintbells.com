@@ -6,6 +6,9 @@
   {% endif %}
 {% else %}
   <style type="text/css">
+    header, footer {display: none;}
+  </style>
+  <style type="text/css">
     .submit-overlay {position: fixed;top: 0;left: 0;width: 100%;height: 100vh; background-color: rgba(255, 255,255, 0.7); z-index: 99999;display: none;}
     .submit-overlay.active {display: block;}
     .submit-overlay .load-more__icon {position: absolute;top: 50%;left: 50%; display: inline-block;-ms-transform: translate(-50%,-50%);-webkit-transform: translate(-50%,-50%);transform: translate(-50%,-50%);width: 32px;height: 32px;opacity: 1}
@@ -13,9 +16,12 @@
   <div class="submit-overlay" id="submitOverlay">
     <span class="load-more__icon"></span>
   </div>
-
+  <div class="vet-logo text-center center">
+    <a href="https://us.lintbells.com/pages/yumove-advance-360">
+      <img style="max-width: 290px" src="https://cdn.shopify.com/s/files/1/0067/6164/4091/files/US-YuMOVE-ADV-360-For-Dogs-Logo.png?v=1575389714">
+    </a>
+  </div>
   <a name="pagecontent" id="pagecontent"></a>
-
   <section class="doggies-info center">
     <div class="container">
       <h1>Create Veterinarian Account</h1>
@@ -119,5 +125,6 @@
     document.getElementById('create_vet_customer').addEventListener('submit', function(evt){
       document.getElementById("submitOverlay").className = 'submit-overlay active';
     });
+
   </script>
 {% endif %}
